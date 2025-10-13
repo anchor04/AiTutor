@@ -1,64 +1,130 @@
-import React, { useState } from 'react';
-import { StatusBar, ScrollView, StyleSheet,Text, TextInput, TouchableOpacity, useColorScheme,Image, View, Alert } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  StatusBar,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+  View,
+  Alert,
+  useColorScheme,
+  Platform,
+  ActivityIndicator
+} from 'react-native';
 import {
   SafeAreaProvider,
   SafeAreaView,
-  useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import Tts from 'react-native-tts';
-import ImagePicker from "react-native-image-crop-picker";
-import OpenAI from "openai";
+import ImagePicker from 'react-native-image-crop-picker';
+import OpenAI from 'openai';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import RNFS from 'react-native-fs';
 
- 
-      
-let setAiResponse = "";
-let base64Image = ""
-
-const OPENAI_API_KEY= "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";
+const OPENAI_API_KEY = "YOUR_KEY";
+const androidApiLevel = Platform.Version;
 
 const openAIClient = new OpenAI({
   baseURL: 'https://api.openai.com/v1/responses',
-  // baseURL: 'https://openrouter.ai/api/v1',
-
   apiKey: OPENAI_API_KEY,
 });
 
-function Texttospeech(content){
-  Tts.speak(content)
-  setTimeout(() => {
-      base64Image = ""
-  }, 1000);
+ function App() {
+  const isDarkMode = useColorScheme() === 'dark';
+
+ useEffect(() => {
+    Tts.getInitStatus()
+      .then(() => console.log('TTS initialized'), console.log(Platform.Version))
+      .catch(err => console.error('TTS initialization failed', err));
+  }, []);
+
+  return (
+    <SafeAreaProvider>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <AppContent />
+    </SafeAreaProvider>
+  );
 }
 
-   const convertImageToBase64 = async (imagePath) => {
-        console.log(imagePath)
-        console.log("imagePath")
-      try {
-        const base64 = await RNFS.readFile(imagePath.path, 'data');
-        return base64;
-      } catch (error) {
-        console.error('Error converting image to base64:', error);
-        return null;
-      }
-    };
+function AppContent() {
+  const scrollViewRef = useRef(null);
+  const cancelRef = useRef(false);
+ const [ImagePath, setImagePath] = useState('');
+  const [base64Image, setbase64Image] = useState('');
+  const [aiResponse, setAiResponse] = useState('');
+  const [currentWordIndex, setCurrentWordIndex] = useState(-1);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isCancelled, setIsCancelled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
+
+  useEffect(() => {
+    return () => {
+      Tts.stop();
+       Tts.removeAllListeners('tts-start');
+    Tts.removeAllListeners('tts-progress');
+    Tts.removeAllListeners('tts-finish');
+    Tts.removeAllListeners('tts-cancel');
+    };
+  }, []);
+
+  //  Highlight-enabled Text-to-Speech
+  const Texttospeech = async (content) => {
+    cancelRef.current = false;
+    setAiResponse(content);
+    setCurrentWordIndex(-1);
+    setIsPaused(false);
+    setIsCancelled(false);
+
+    const sentences = content.match(/[^.!?]+[.!?]*/g) || [content];
+    const allWords = content.split(/\s+/);
+    let globalWordIndex = 0;
+
+    Tts.stop();
+
+    for (const sentence of sentences) {
+      if (cancelRef.current) return;
+      const words = sentence.split(/\s+/);
+      Tts.setDefaultVoice('com.apple.ttsbundle.Moira-compact');
+      Tts.speak(sentence);
+      for (let i = 0; i < words.length; i++) {
+      if (cancelRef.current) return;
+           while (isPaused) {
+          await new Promise((resolve) => setTimeout(resolve, 200));
+          if (cancelRef.current) return;
+        }
+
+        setCurrentWordIndex(globalWordIndex + i);
+      await new Promise((resolve) => 
+ setTimeout(resolve, Math.max(words[i].length * 80, 250))
+        );
+
+        if (cancelRef.current) return;
+      }
+      globalWordIndex += words.length;
+      await new Promise((resolve) => setTimeout(resolve, sentence.length * 60 + 300));
+      if (cancelRef.current) return;
+    }
+
+    Tts.stop();
+    setCurrentWordIndex(-1);
+  };
+// function Texttospeech(content){
+//   Tts.speak(content)
+//     setAiResponse(content);
+// }
 
 async function  SendRequest(query) {
   if (!OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY is not configured');
     }
-    console.log(query)
-    // console.log('Generating solution for problem:', query);
-    // let image_url = { url: `data:image/jpeg;base64,${query}` }
-    let image_url = { url: `data:image/jpg;base64,${query.data}` }
+
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -71,53 +137,45 @@ async function  SendRequest(query) {
           {
             role: 'user',
             // content: `Provide a detailed step-by-step solution to this problem: ${image_url}`
-            content: `what do you see in this image?: ${image_url}`
+            content: [
+          {
+            type: 'text',
+            text: 'Provide a detailed step-by-step solution to this problem:'
+          },
+          {
+            type:'image_url',
+            image_url: {
+              url: `data:${query.mime};base64,${query.data}`
+            }
+          }
+
+            ]
           },
         ],
-        max_tokens: 1500
+        max_tokens: 1500,
       }),
     });
 
     if (!response.ok) {
       const error = await response.text();
-      // console.log('OpenAI API error:', error);
+      setIsLoading(false)
+      console.log('OpenAI API error:', error);
       throw new Error(`OpenAI API error: ${response.status}`);
     }
 
     const data = await response.json();
     const solution = data.choices[0].message.content;
+    setIsLoading(false)
+  const cleanedSolution = solution
+  .replace(/^###\s*/gm, '')   // remove markdown headings
+  .replace(/\\\\/g, '\\')     // fix double backslashes
+  .trim();                    // remove leading/trailing spaces
 
-    Texttospeech(solution)
-    setAiResponse = solution;
-    setTimeout(() => {
-      setAiResponse != "" && setAiResponse != null
-    }, 1000);
+    Texttospeech(cleanedSolution)
+    scrollViewRef.current?.scrollToEnd({ animated: true });
+    console.log('Solution generated successfully',solution);
 
-    // console.log('Solution generated successfully',solution);
-    // console.log('Solution gene',image_url);
 }
-
-
- function App() {
-
-  const isDarkMode = useColorScheme() === 'dark';
-
- Tts.getInitStatus().then(() => {
-      console.log('TTS initialized');
-    }).catch(err => {
-      console.error('TTS initialization failed', err);
-    });
-
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-const [ImagePath, setImagePath] = useState("");
 
 
 const ImagePickerFn = () => {
@@ -132,10 +190,8 @@ const ImagePickerFn = () => {
           includeBase64:true,
           freeStyleCropEnabled:true
         }).then(image => {
-          // console.log(image);
-          // Handle image
-          convertImageToBase64(image)
-          base64Image = image.data
+          // convertImageToBase64(image)
+          setbase64Image(image)
           setImagePath(image.path)
         }).catch(error => console.log('Camera error:', error)),
       },
@@ -146,9 +202,8 @@ const ImagePickerFn = () => {
           includeBase64:true,
           freeStyleCropEnabled:true
         }).then(image => {
-          convertImageToBase64(image)
-          // console.log(image);
-          base64Image = image.data
+          // convertImageToBase64(image)
+          setbase64Image(image)
           setImagePath(image.path)
           // Handle image
         }).catch(error => console.log('Gallery error:', error)),
@@ -166,7 +221,33 @@ const ImagePickerFn = () => {
   return (
     <>
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollviewstyle}>
+       {isLoading && (
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(37,99,235,0.9)',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 9999,
+        }}>
+        <ActivityIndicator size="large" color="#FFFFFF" />
+        <Text
+          style={{
+            color: '#fff',
+            marginTop: 12,
+            fontSize: 25,
+            fontWeight: '500',
+          }}>
+          Getting AI Response...
+        </Text>
+      </View>
+    )}
+
+      <ScrollView style={styles.scrollviewstyle} ref={scrollViewRef}>
     <View style={styles.container}>
       <View style={styles.TopTextView}>
         <Text style={styles.TopText}>
@@ -186,18 +267,29 @@ const ImagePickerFn = () => {
           </TouchableOpacity>
           </LinearGradient>
           :
-          <LinearGradient style={styles.CenterImage} colors={['#5B63FF', '#367AFF']}>
-        <TouchableOpacity style={styles.CenterImage} 
+          <>
+          {/* <LinearGradient style={styles.CenterImage} colors={['#5B63FF', '#367AFF']}> */}
+        <TouchableOpacity style={styles.CenterImageSelected} 
         onPress={()=>ImagePickerFn()}>
           <Image     source={{ uri: ImagePath }}
-      style={{ width: 200, height: 200, borderRadius:100 }}/>
+      style={{ width: 200, height: 200 }} resizeMode='contain'/>
           </TouchableOpacity>
-          </LinearGradient>
+
+    <TouchableOpacity style={styles.Crossbtnview} onPress={()=> {
+      cancelRef.current = true;
+  setCurrentWordIndex(-1);
+  setAiResponse("");
+  setImagePath("");
+  Tts.stop();
+  }} >
+    <Ionicons name="close-circle-outline" size={35} color={'#000'} />
+    </TouchableOpacity>
+    </>
         }
 
 <LinearGradient style={styles.BottomBtnView} colors={['#5B63FF', '#2563EB']}>
           <TouchableOpacity 
-        onPress={()=> {SendRequest(base64Image)}}>
+        onPress={()=> {SendRequest(base64Image), setIsLoading(true)}}>
           <Text style={styles.BottomBtnText}>
             Ask AI Tutor
           </Text>
@@ -205,6 +297,49 @@ const ImagePickerFn = () => {
           </LinearGradient>
       </View>
 
+  
+    {aiResponse !== ""?
+      <>
+     <View style={styles.ResponseContainer}>
+        <View style={styles.solutionHeading}>
+        <Text style={styles.solutionText}>
+          Solution: {"\n"}
+        </Text>
+        </View>
+        <StepFormattedText content={aiResponse} currentWordIndex={currentWordIndex} />
+          {/* <Text style={styles.ResponseText}>
+            {aiResponse.split(/\s+/).map((word, index) => (
+                  <Text
+                    key={index}
+                    style={{
+                      backgroundColor: index === currentWordIndex ? '#FFD54F' : 'transparent',
+                      color: index === currentWordIndex ? '#000' : '#111',
+                    }}
+                  >
+                    {word + ' '}
+                  </Text>
+                ))}
+          </Text> */}
+    </View>
+      <View style={styles.EmptyContainer}>
+        <TouchableOpacity style={styles.TTSplay} onPress={()=> {setIsPaused(false); Tts.resume();}} >
+    <Ionicons name="caret-forward-circle-outline" size={35} color={'white'} />
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.TTSpause} onPress={()=> {setIsPaused(true); Tts.pause();}} >
+    <Ionicons name="pause-circle-outline" size={35} color={'#000'} />
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.TTScancel} onPress={()=> {
+       cancelRef.current = true;
+  setCurrentWordIndex(-1);
+  setAiResponse("");
+  setImagePath("");
+  Tts.stop();
+      }} >
+    <Ionicons name="close-circle-outline" size={35} color={'#fff'} />
+    </TouchableOpacity>
+    </View>
+    </>
+    :
     <View style={styles.containerRecentSession}>
       <Text style={styles.title}>Recent Sessions</Text>
 
@@ -218,18 +353,6 @@ const ImagePickerFn = () => {
         </View>
       </View>
     </View>
-    {setAiResponse != '' && setAiResponse != null?
-    <>
-     <View style={styles.ResponseContainer}>
-          <Text style={styles.ResponseText}>
-            {setAiResponse}
-          </Text>
-    </View>
-      <View style={styles.EmptyContainer}>
-    </View>
-    </>
-    :
-    null
 }
     </View>
 
@@ -260,11 +383,104 @@ const ImagePickerFn = () => {
       </View>
     </View>
 
-   
     </SafeAreaView>
     </>
   );
 }
+
+// const StepFormattedText = ({ content }) => {
+//   // Remove all ### and split lines
+//   const lines = content.replace(/^###\s*/gm, '').split('\n');
+
+//   return (
+//     <View style={{ paddingHorizontal: '5%', paddingBottom: '5%' }}>
+//       {lines.map((line, index) => {
+//         const trimmed = line.trim();
+
+//         // Bold any line starting with "Step" or "Final Expression"
+//         if (/^(Step\s*\d+|Final Expression)/i.test(trimmed)) {
+//           return (
+//             <Text key={index} style={{ fontWeight: 'bold', fontSize: 18, marginTop: 8, color: '#000' }}>
+//               {trimmed}
+//             </Text>
+//           );
+//         }
+
+//         // Regular lines
+//         return (
+//           <Text key={index} style={{ fontSize: 16, color: '#111', marginVertical: 2 }}>
+//             {trimmed}
+//           </Text>
+//         );
+//       })}
+//     </View>
+//   );
+// };
+const StepFormattedText = ({ content, currentWordIndex }) => {
+  // 🧹 Clean up text: remove ### and fix \\ to \
+  const cleaned = content.replace(/^###\s*/gm, '').replace(/\\\\/g, '\\');
+
+  // Split by lines
+  const lines = cleaned.split('\n');
+
+  // Keep track of word index for highlighting
+  let globalWordIndex = 0;
+
+  return (
+    <View style={{ paddingHorizontal: '5%', paddingBottom: '5%' }}>
+      {lines.map((line, index) => {
+        const trimmed = line.trim();
+        if (!trimmed) return null; // skip empty lines
+
+        // Split each line into words
+        const words = trimmed.split(/\s+/);
+
+        // Check if line is a heading
+        const isStepLine = /^(Step\s*\d+|Final Expression)/i.test(trimmed);
+
+        return (
+          <Text
+            key={index}
+            style={{
+              fontWeight: isStepLine ? 'bold' : 'normal',
+              fontSize: isStepLine ? 18 : 16,
+              marginTop: isStepLine ? 8 : 2,
+              color: '#111',
+              flexWrap: 'wrap',
+            }}
+          >
+            {words.map((word, wordIndex) => {
+              const currentIndex = globalWordIndex + wordIndex;
+              const isHighlighted = currentIndex === currentWordIndex;
+
+              return (
+                <Text
+                  key={`${index}-${wordIndex}`}
+                  style={{
+                    backgroundColor: isHighlighted ? '#FFD54F' : 'transparent',
+                    color: isHighlighted ? '#000' : '#111',
+                  }}
+                >
+                  {word + ' '}
+                </Text>
+              );
+            })}
+
+            {/* Increment the global word index after rendering each line */}
+            {(() => {
+              globalWordIndex += words.length;
+              return null;
+            })()}
+          </Text>
+        );
+      })}
+    </View>
+  );
+};
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -274,7 +490,7 @@ const styles = StyleSheet.create({
     paddingBottom:'30%'
   },
   TopTextView:{
-    marginTop:'30%',
+    marginTop:'5%',
     justifyContent:"center",
     alignItems:'center'
   },
@@ -295,6 +511,13 @@ const styles = StyleSheet.create({
   CenterImageLinear:{
 
   },
+  CenterImageSelected:{
+    height:200,
+    width:200,
+    flexDirection:'row',
+    justifyContent:'center',
+    alignItems:'center',
+  },
   CenterImage:{
     borderRadius:100,
     height:200,
@@ -314,11 +537,37 @@ const styles = StyleSheet.create({
   },
   Crossbtnview:{
     position:'absolute',
+    height:50,
+    width:50,
+    top:10,
+    right:40,
+    borderRadius:50,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  TTSplay:{
+    // position:'absolute',
+    backgroundColor:'green',
+    height:50,
+    width:50,
+    borderRadius:50,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+   TTSpause:{
+    // position:'absolute',
     backgroundColor:'white',
-    height:30,
-    width:30,
-    top:20,
-    right:10,
+    height:50,
+    width:50,
+    borderRadius:50,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+   TTScancel:{
+    // position:'absolute',
+    backgroundColor:'red',
+    height:50,
+    width:50,
     borderRadius:50,
     justifyContent:'center',
     alignItems:'center'
@@ -436,7 +685,18 @@ const styles = StyleSheet.create({
     borderRadius:20,
     marginBottom:'20%',
     justifyContent:'center',
-    alignSelf:'center'
+    alignSelf:'center',
+    marginTop:"15%"
+  },
+  solutionHeading:{
+    height:40,
+    margin:"5%",
+    marginBottom:2
+  }, 
+  solutionText:{
+    fontSize:30,
+    color:'#3B82F6',
+    fontWeight:'bold'
   },
   ResponseText:{
     fontSize:20,
@@ -445,7 +705,9 @@ const styles = StyleSheet.create({
   },
   EmptyContainer:{
         // height:'30%',
-    marginBottom:'20%',
+    marginBottom:'50%',
+    justifyContent:'space-evenly',
+    flexDirection:'row',
   }
 
 });
