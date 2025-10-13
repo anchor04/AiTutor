@@ -22,8 +22,7 @@ import OpenAI from 'openai';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from '@react-native-vector-icons/ionicons';
 
-const OPENAI_API_KEY = "YOUR_KEY";
-const androidApiLevel = Platform.Version;
+const OPENAI_API_KEY = "Your_KEY";
 
 const openAIClient = new OpenAI({
   baseURL: 'https://api.openai.com/v1/responses',
@@ -35,7 +34,7 @@ const openAIClient = new OpenAI({
 
  useEffect(() => {
     Tts.getInitStatus()
-      .then(() => console.log('TTS initialized'), console.log(Platform.Version))
+      .then(() => console.log('TTS initialized'))
       .catch(err => console.error('TTS initialization failed', err));
   }, []);
 
@@ -119,7 +118,8 @@ async function  SendRequest(query) {
   if (!OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY is not configured');
     }
-
+ try {
+    setIsLoading(true); // start loader at the top
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -171,10 +171,18 @@ async function  SendRequest(query) {
   .replace(/\\\\/g, '\\')     // fix double backslashes
   .trim();                    // remove leading/trailing spaces
 
+     setIsLoading(false);
+    setAiResponse(cleanedSolution);
     Texttospeech(cleanedSolution)
     scrollViewRef.current?.scrollToEnd({ animated: true });
     console.log('Solution generated successfully',solution);
-
+ } catch (error) {
+    console.error('OpenAI API error:', error);
+    Alert.alert('Error', 'Something went wrong. Please try again.');
+  } finally {
+    // Always ensure loader stops even on error
+    setIsLoading(false);
+  }
 }
 
 
@@ -289,7 +297,7 @@ const ImagePickerFn = () => {
 
 <LinearGradient style={styles.BottomBtnView} colors={['#5B63FF', '#2563EB']}>
           <TouchableOpacity 
-        onPress={()=> {SendRequest(base64Image), setIsLoading(true)}}>
+        onPress={()=> {SendRequest(base64Image)}}>
           <Text style={styles.BottomBtnText}>
             Ask AI Tutor
           </Text>
