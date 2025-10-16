@@ -27,7 +27,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import LottieView from 'lottie-react-native';
 
 const Stack = createNativeStackNavigator();
-const OPENAI_API_KEY = "YOUR_KEY";
+const OPENAI_API_KEY = "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";
 
 const openAIClient = new OpenAI({
   baseURL: 'https://api.openai.com/v1/responses',
@@ -172,14 +172,14 @@ function AppContent({ navigation }) {
       {
         text: 'Camera',
         onPress: () =>
-          ImagePicker.openCamera({ cropping: true, includeBase64: true, freeStyleCropEnabled:true })
+          ImagePicker.openCamera({ cropping: true, includeBase64: true })
             .then(image => { setbase64Image(image); setImagePath(image.path); })
             .catch(error => console.log('Camera error:', error)),
       },
       {
         text: 'Gallery',
         onPress: () =>
-          ImagePicker.openPicker({ cropping: true, includeBase64: true, freeStyleCropEnabled:true })
+          ImagePicker.openPicker({ cropping: true, includeBase64: true })
             .then(image => { setbase64Image(image); setImagePath(image.path); })
             .catch(error => console.log('Gallery error:', error)),
       },
@@ -547,7 +547,12 @@ function SolutionScreen({ route, navigation }) {
         </View>
       ) : null}
 
- 
+      {/* <TouchableOpacity
+        style={[styles.goBackBtn, { marginTop: 20 }]}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.goBackText}>Back to Home</Text>
+      </TouchableOpacity> */}
       <View style={{marginBottom:20}}>
 
       </View>
@@ -556,18 +561,84 @@ function SolutionScreen({ route, navigation }) {
 }
 
 
+// StepFormattedText (AI Highlight Renderer)
+// const StepFormattedText = ({ content, currentWordIndex }) => {
+//   const cleaned = content.replace(/^###\s*/gm, '').replace(/\\\\/g, '\\');
+//   const lines = cleaned.split('\n');
+//   let globalWordIndex = 0;
+
+//    return (
+//     <View style={{ paddingHorizontal: '5%', paddingBottom: '5%' }}>
+//       {lines.map((line, index) => {
+//         const trimmed = line.trim();
+//         if (!trimmed) return null;
+//         const words = trimmed.split(/\s+/);
+
+//         // Detect lines like “Step 1:”, “step 2:”, or “1.” as step headers
+//         const isStepLine = /^(Step\s*\d+[:.]|^\d+[.:])/i.test(trimmed);
+
+//         return (
+//           <Text
+//             key={index}
+//             style={{
+//               fontWeight: isStepLine ? 'bold' : 'normal',
+//               fontSize: isStepLine ? 18 : 16,
+//               marginTop: isStepLine ? 8 : 2,
+//               color: '#111',
+//             }}
+//           >
+//             {words.map((word, wordIndex) => {
+//               const currentIndex = globalWordIndex + wordIndex;
+//               const isHighlighted = currentIndex === currentWordIndex;
+
+//               // Bold only the "Step 1:", "1." part, not the whole line
+//               const isStepKeyword = /^(Step\s*\d+[:.]|^\d+[.:])$/i.test(word);
+
+//               return (
+//                 <Text
+//                   key={`${index}-${wordIndex}`}
+//                   style={{
+//                     backgroundColor: isHighlighted ? '#FFD54F' : 'transparent',
+//                     color: isHighlighted ? '#000' : '#111',
+//                     fontWeight: isStepKeyword ? 'bold' : isStepLine ? 'bold' : 'normal',
+//                   }}
+//                 >
+//                   {word + ' '}
+//                 </Text>
+//               );
+//             })}
+//             {(() => {
+//               globalWordIndex += words.length;
+//               return null;
+//             })()}
+//           </Text>
+//         );
+//       })}
+//     </View>
+//   );
+// };
+
 const StepFormattedText = ({ content, currentWordIndex }) => {
   let cleaned = content.replace(/^###\s*/gm, '').replace(/\\\\/g, '\\');
-  cleaned = cleaned.replace(/(\d+\.\s)/g, '\n$1');
-  cleaned = cleaned.replace(/(Step\s*\d+[:.])/gi, '\n$1');
+    cleaned = cleaned.replace(/(\d+\.\s)/g, '\n$1');         // puts new line before "1. ", "2. ", etc.
+  cleaned = cleaned.replace(/(Step\s*\d+[:.])/gi, '\n$1'); // puts new line before "Step 1:" etc.
   const lines = cleaned.split('\n');
-
+  let globalWordIndex = 0;
+  console.log(cleaned)
+  console.log("cleane123123d")
+  // Light pastel background colors
   const lightColors = [
-    '#FCE7F3', '#E0F2FE', '#FEF9C3', '#DCFCE7',
-    '#EDE9FE', '#FFF4E5', '#F3E8FF', '#E0F7FA'
+    '#FCE7F3', // pink
+    '#E0F2FE', // blue
+    '#FEF9C3', // yellow
+    '#DCFCE7', // green
+    '#EDE9FE', // lavender
+    '#FFF4E5', // peach
+    '#F3E8FF', // soft purple
+    '#E0F7FA', // aqua
   ];
 
-  // Separate intro and steps
+  // Split content into intro + step groups
   const stepBlocks = [];
   let currentBlock = [];
   let introText = [];
@@ -588,54 +659,32 @@ const StepFormattedText = ({ content, currentWordIndex }) => {
   }
   if (currentBlock.length > 0) stepBlocks.push(currentBlock.join(' '));
 
-  // Combine all content (intro + steps) into one unified highlight flow
-  const allBlocks = [
-    { type: 'intro', text: introText.join(' ') },
-    ...stepBlocks.map((s, i) => ({ type: 'step', text: s, color: lightColors[i % lightColors.length] }))
-  ];
-
-  let globalWordIndex = 0;
+  const getRandomColor = (i) => lightColors[i % lightColors.length];
 
   return (
     <View style={{ paddingHorizontal: 16, paddingBottom: 20 }}>
-      {allBlocks.map((block, index) => {
-        if (!block.text) return null;
+      {/* Intro paragraph (outside boxes) */}
+      {introText.length > 0 && (
+        <Text style={{ fontSize: 16, lineHeight: 24, color: '#111', marginBottom: 14 }}>
+          {introText.join(' ')}
+        </Text>
+      )}
 
-        const words = block.text.split(/\s+/);
-        const stepMatch = block.text.match(/^(Step\s*\d+[:.]|^\d+[.:])/i);
+      {/* Step boxes */}
+      {stepBlocks.map((step, index) => {
+        const words = step.split(/\s+/);
+        const backgroundColor = getRandomColor(index);
+
+        // Find where the "Step 1:" or "1." ends
+        const stepMatch = step.match(/^(Step\s*\d+[:.]|^\d+[.:])/i);
         const stepLabel = stepMatch ? stepMatch[0] : null;
-        const restOfText = stepLabel ? block.text.replace(stepLabel, '').trim() : block.text;
+        const restOfText = stepLabel ? step.replace(stepLabel, '').trim() : step;
 
-        if (block.type === 'intro') {
-          // Highlight words from the intro as well
-          return (
-            <Text key={`intro-${index}`} style={{ fontSize: 16, lineHeight: 24, color: '#111', marginBottom: 14, flexWrap: 'wrap' }}>
-              {words.map((word, wIndex) => {
-                const currentIndex = globalWordIndex + wIndex;
-                const isHighlighted = currentIndex === currentWordIndex;
-                return (
-                  <Text
-                    key={`${index}-${wIndex}`}
-                    style={{
-                      backgroundColor: isHighlighted ? '#FFD54F' : 'transparent',
-                      color: isHighlighted ? '#000' : '#111',
-                    }}
-                  >
-                    {word + ' '}
-                  </Text>
-                );
-              })}
-              {(() => { globalWordIndex += words.length; return null; })()}
-            </Text>
-          );
-        }
-
-        // Step blocks
         return (
           <View
-            key={`step-${index}`}
+            key={index}
             style={{
-              backgroundColor: block.color,
+              backgroundColor,
               borderRadius: 12,
               padding: 12,
               marginBottom: 12,
@@ -646,28 +695,16 @@ const StepFormattedText = ({ content, currentWordIndex }) => {
               elevation: 1,
             }}
           >
+            {/* Step Label */}
             {stepLabel && (
               <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#111', marginBottom: 4 }}>
                 {stepLabel}
               </Text>
             )}
-            <Text style={{ fontSize: 16, lineHeight: 22, color: '#111', flexWrap: 'wrap' }}>
-              {restOfText.split(/\s+/).map((word, wIndex) => {
-                const currentIndex = globalWordIndex + wIndex;
-                const isHighlighted = currentIndex === currentWordIndex;
-                return (
-                  <Text
-                    key={`${index}-${wIndex}`}
-                    style={{
-                      backgroundColor: isHighlighted ? '#FFD54F' : 'transparent',
-                      color: isHighlighted ? '#000' : '#111',
-                    }}
-                  >
-                    {word + ' '}
-                  </Text>
-                );
-              })}
-              {(() => { globalWordIndex += restOfText.split(/\s+/).length; return null; })()}
+
+            {/* Step Description */}
+            <Text style={{ fontSize: 16, lineHeight: 22, color: '#111' }}>
+              {restOfText}
             </Text>
           </View>
         );
