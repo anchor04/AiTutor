@@ -27,7 +27,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import LottieView from 'lottie-react-native';
 
 const Stack = createNativeStackNavigator();
-const OPENAI_API_KEY = "YOUR_KEY";
+const OPENAI_API_KEY = "Your_KEY";
 
 const openAIClient = new OpenAI({
   baseURL: 'https://api.openai.com/v1/responses',
@@ -253,98 +253,6 @@ function AppContent({ navigation }) {
       </SafeAreaView>
 
 
-      {/* <SafeAreaView style={styles.container}>
-        {isLoading && (
-          <View style={styles.loadingOverlay}>
-            <ActivityIndicator size="large" color="#FFFFFF" />
-            <Text style={styles.loadingText}>Getting AI Response...</Text>
-          </View>
-        )}
-
-        <ScrollView style={styles.scrollviewstyle} ref={scrollViewRef}>
-          <View style={styles.container}>
-            <View style={styles.TopTextView}>
-              <Text style={styles.TopText}>What do you want {'\n'} help with today?</Text>
-              <Text style={styles.TopTextMessage}>Snap a photo or ask your AI tutor</Text>
-            </View>
-
-            <View style={styles.CenterImageView}>
-              {ImagePath === '' ? (
-                <LinearGradient style={styles.CenterImage} colors={['#5B63FF', '#367AFF']}>
-                  <TouchableOpacity style={styles.CenterImage} onPress={() => ImagePickerFn()}>
-                    <Ionicons name='camera-outline' size={100} color="#fff" />
-                  </TouchableOpacity>
-                </LinearGradient>
-              ) : (
-                <>
-                  <TouchableOpacity style={styles.CenterImageSelected} onPress={() => ImagePickerFn()}>
-                    <Image source={{ uri: ImagePath }} style={{ width: 200, height: 200 }} resizeMode='contain' />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.Crossbtnview}
-                    onPress={() => {
-                      cancelRef.current = true;
-                      setCurrentWordIndex(-1);
-                      setAiResponse('');
-                      setImagePath('');
-                      Tts.stop();
-                    }}>
-                    <Ionicons name="close-circle-outline" size={35} color={'#000'} />
-                  </TouchableOpacity>
-                </>
-              )}
-
-              <LinearGradient style={styles.BottomBtnView} colors={['#5B63FF', '#2563EB']}>
-                <TouchableOpacity onPress={() => { SendRequest(base64Image); }}>
-                  <Text style={styles.BottomBtnText}>Ask AI Tutor</Text>
-                </TouchableOpacity>
-              </LinearGradient>
-            </View>
-
-            {aiResponse !== '' ? (
-              <>
-                <View style={styles.ResponseContainer}>
-                  <View style={styles.solutionHeading}>
-                    <Text style={styles.solutionText}>Solution: {"\n"}</Text>
-                  </View>
-                  <StepFormattedText content={aiResponse} currentWordIndex={currentWordIndex} />
-                </View>
-
-                <View style={styles.EmptyContainer}>
-                  <TouchableOpacity style={styles.TTSplay} onPress={() => { setIsPaused(false); Tts.resume(); }}>
-                    <Ionicons name="caret-forward-circle-outline" size={35} color={'white'} />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.TTSpause} onPress={() => { setIsPaused(true); Tts.pause(); }}>
-                    <Ionicons name="pause-circle-outline" size={35} color={'#000'} />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.TTScancel} onPress={() => {
-                    cancelRef.current = true;
-                    setCurrentWordIndex(-1);
-                    setAiResponse('');
-                    setImagePath('');
-                    Tts.stop();
-                  }}>
-                    <Ionicons name="close-circle-outline" size={35} color={'#fff'} />
-                  </TouchableOpacity>
-                </View>
-              </>
-            ) : (
-              <View style={styles.containerRecentSession}>
-                <Text style={styles.title}>Recent Sessions</Text>
-                <View style={styles.card}>
-                  <View style={styles.iconContainer}>
-                    <Ionicons name="calculator-outline" size={24} color="#6B7280" />
-                  </View>
-                  <View style={styles.textContainer}>
-                    <Text style={styles.subject}>Math</Text>
-                    <Text style={styles.subtitle}>Solve 2x² - 3x + 4 = 0</Text>
-                  </View>
-                </View>
-              </View>
-            )}
-          </View>
-        </ScrollView> */}
-
         <View style={styles.wrapper}>
           <View style={styles.Bottomcontainer}>
             <TouchableOpacity style={styles.navItem}>
@@ -368,7 +276,6 @@ function AppContent({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-      {/* </SafeAreaView> */}
     
     </>
   );
@@ -588,7 +495,7 @@ const StepFormattedText = ({ content, currentWordIndex }) => {
   }
   if (currentBlock.length > 0) stepBlocks.push(currentBlock.join(' '));
 
-  // Combine all content (intro + steps) into one unified highlight flow
+  // Combine all content
   const allBlocks = [
     { type: 'intro', text: introText.join(' ') },
     ...stepBlocks.map((s, i) => ({ type: 'step', text: s, color: lightColors[i % lightColors.length] }))
@@ -607,7 +514,7 @@ const StepFormattedText = ({ content, currentWordIndex }) => {
         const restOfText = stepLabel ? block.text.replace(stepLabel, '').trim() : block.text;
 
         if (block.type === 'intro') {
-          // Highlight words from the intro as well
+          // Highlight words from the intro
           return (
             <Text key={`intro-${index}`} style={{ fontSize: 16, lineHeight: 24, color: '#111', marginBottom: 14, flexWrap: 'wrap' }}>
               {words.map((word, wIndex) => {
