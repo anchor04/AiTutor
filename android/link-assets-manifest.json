@@ -1,0 +1,69 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/AwanZaman Regular.ttf",
+      "sha1": "795bcc6c0e2b1e308a121e2b7ae7e49049ae0f3c"
+    },
+    {
+      "path": "assets/fonts/Roboto Black/Roboto Black.ttf",
+      "sha1": "9eb4f9d1aaceb455483d15ce81fd6dcb1fbdb062"
+    },
+    {
+      "path": "assets/fonts/Roboto Black Italic/Roboto Black Italic.ttf",
+      "sha1": "dfcf1003251caffcc9b94057d9845a5626b02fa3"
+    },
+    {
+      "path": "assets/fonts/Roboto Bold/Roboto Bold.ttf",
+      "sha1": "5d7976afc1e64be742d22c750cff2a023d3842ba"
+    },
+    {
+      "path": "assets/fonts/Roboto Bold Condensed/Roboto Bold Condensed.ttf",
+      "sha1": "55c1735e4085089e2ea3b03e9809fb933c3b5db7"
+    },
+    {
+      "path": "assets/fonts/Roboto Bold Condensed Italic/Roboto Bold Condensed Italic.ttf",
+      "sha1": "4d713416816079267467f0abf05e9491a58b7544"
+    },
+    {
+      "path": "assets/fonts/Roboto Condensed/Roboto Condensed.ttf",
+      "sha1": "25e47bf261a07aa014c90bca273542907f7461cd"
+    },
+    {
+      "path": "assets/fonts/Roboto Condensed Italic/Roboto Condensed Italic.ttf",
+      "sha1": "03f4e41643b88ef712ed1b45029a020ee6bcea74"
+    },
+    {
+      "path": "assets/fonts/Roboto Italic/Roboto Italic.ttf",
+      "sha1": "7703c7ab71c35f62289734f6b5431589008e700c"
+    },
+    {
+      "path": "assets/fonts/Roboto Light/Roboto Light.ttf",
+      "sha1": "7d0421de4e1398fb9087378a9ccc9297bdbc84b9"
+    },
+    {
+      "path": "assets/fonts/Roboto Regular/Roboto Regular.ttf",
+      "sha1": "af03242b7545da3e54913906aaadce6a55c5f3bd"
+    },
+    {
+      "path": "assets/fonts/Roboto Slab Light.ttf",
+      "sha1": "eb2bdc7bfc19fac0f398e4b7e67fc858c1f8ae24"
+    },
+    {
+      "path": "assets/fonts/Roboto Slab Regular.ttf",
+      "sha1": "2626113e0b5b19a822c654b725863ccd8cd393dd"
+    },
+    {
+      "path": "assets/fonts/Roboto Thin Italic/Roboto Thin Italic.ttf",
+      "sha1": "b61b6329c1b273fd662e638fb9cff02811d6d769"
+    },
+    {
+      "path": "assets/fonts/Typewriter Regular.ttf",
+      "sha1": "4ebd7953c18aa75424ec16a229392a9ec7d7d0c3"
+    },
+    {
+      "path": "assets/fonts/Typewriter.ttf",
+      "sha1": "39c18688b6fccb38874cbe50fbb3254df0806a31"
+    }
+  ]
+}
