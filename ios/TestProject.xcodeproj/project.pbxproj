@@ -19,11 +19,11 @@
 		7D0C4C28A68141D08C65A75F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8D1F7B51D20C4D61B0FAAF6E /* Roboto Black Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24EDFC3AAB724557BCCD3FA5 /* Roboto Black Italic.ttf */; };
+		8EFA46D37F7EBE025E857448 /* Pods_TestProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAF5ABECC7A8D9613612485 /* Pods_TestProject.framework */; };
 		90651F52B6714674947B14A6 /* AwanZaman Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F253C91623E843E3BC888E5E /* AwanZaman Regular.ttf */; };
 		970169D73D564E6392FEF02B /* Typewriter Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A89D5DDC864487192173BE2 /* Typewriter Regular.ttf */; };
 		A4AC296DB8E34E5AA5C06F79 /* Roboto Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BB0C6ECA40A44CCBF16E7C3 /* Roboto Black.ttf */; };
 		A854CD9416C44351A566AE20 /* Roboto Slab Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17BDDC4258FC45FE98E2F7FE /* Roboto Slab Light.ttf */; };
-		AEAE3672DDCD118ED91C55FA /* Pods_TestProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19467C832347B78461F80388 /* Pods_TestProject.framework */; };
 		C9F7A4444CC141D0BD9C469B /* Roboto Condensed Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9DE1B7E191D0432788080EDB /* Roboto Condensed Italic.ttf */; };
 		DF195E042EA86544002DBFE5 /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF195E032EA86544002DBFE5 /* Speech.framework */; };
 		DF195E062EA8654E002DBFE5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF195E052EA8654E002DBFE5 /* AVFoundation.framework */; };
@@ -43,16 +43,16 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TestProject/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = TestProject/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		17BDDC4258FC45FE98E2F7FE /* Roboto Slab Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Slab Light.ttf"; path = "../assets/fonts/Roboto Slab Light.ttf"; sourceTree = "<group>"; };
-		19467C832347B78461F80388 /* Pods_TestProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E770A90A8984D0F9C0942E1 /* Typewriter.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Typewriter.ttf; path = ../assets/fonts/Typewriter.ttf; sourceTree = "<group>"; };
 		24EDFC3AAB724557BCCD3FA5 /* Roboto Black Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Black Italic.ttf"; path = "../assets/fonts/Roboto Black Italic/Roboto Black Italic.ttf"; sourceTree = "<group>"; };
 		282C737268914F0A9A54C5A7 /* Roboto Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Regular.ttf"; path = "../assets/fonts/Roboto Regular/Roboto Regular.ttf"; sourceTree = "<group>"; };
 		55E47FA5835B4ADD8DA8AA30 /* Roboto Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Bold.ttf"; path = "../assets/fonts/Roboto Bold/Roboto Bold.ttf"; sourceTree = "<group>"; };
 		5E5C8FF09CBB4B41BE401983 /* Roboto Thin Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Thin Italic.ttf"; path = "../assets/fonts/Roboto Thin Italic/Roboto Thin Italic.ttf"; sourceTree = "<group>"; };
 		66E10277387C4FE687BD62F2 /* Roboto Bold Condensed Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Bold Condensed Italic.ttf"; path = "../assets/fonts/Roboto Bold Condensed Italic/Roboto Bold Condensed Italic.ttf"; sourceTree = "<group>"; };
+		714F8ED1346FC1587699C56C /* Pods-TestProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestProject.release.xcconfig"; path = "Target Support Files/Pods-TestProject/Pods-TestProject.release.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = TestProject/AppDelegate.swift; sourceTree = "<group>"; };
+		7BAF5ABECC7A8D9613612485 /* Pods_TestProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TestProject/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8790AF28B19DDF4AE0DBDB22 /* Pods-TestProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestProject.debug.xcconfig"; path = "Target Support Files/Pods-TestProject/Pods-TestProject.debug.xcconfig"; sourceTree = "<group>"; };
 		8BB0C6ECA40A44CCBF16E7C3 /* Roboto Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Black.ttf"; path = "../assets/fonts/Roboto Black/Roboto Black.ttf"; sourceTree = "<group>"; };
 		9A89D5DDC864487192173BE2 /* Typewriter Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Typewriter Regular.ttf"; path = "../assets/fonts/Typewriter Regular.ttf"; sourceTree = "<group>"; };
 		9DE1B7E191D0432788080EDB /* Roboto Condensed Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Condensed Italic.ttf"; path = "../assets/fonts/Roboto Condensed Italic/Roboto Condensed Italic.ttf"; sourceTree = "<group>"; };
@@ -61,7 +61,6 @@
 		BE005FC6C27641AFB7D7024E /* Roboto Condensed.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Condensed.ttf"; path = "../assets/fonts/Roboto Condensed/Roboto Condensed.ttf"; sourceTree = "<group>"; };
 		C9534A3ECB194EE6BD0D78A1 /* Roboto Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Light.ttf"; path = "../assets/fonts/Roboto Light/Roboto Light.ttf"; sourceTree = "<group>"; };
 		D019C88B33E14C4B84CDD330 /* Roboto Slab Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Slab Regular.ttf"; path = "../assets/fonts/Roboto Slab Regular.ttf"; sourceTree = "<group>"; };
-		D4C2643E1F17C43DE9C6E841 /* Pods-TestProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestProject.release.xcconfig"; path = "Target Support Files/Pods-TestProject/Pods-TestProject.release.xcconfig"; sourceTree = "<group>"; };
 		DF195E032EA86544002DBFE5 /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = System/Library/Frameworks/Speech.framework; sourceTree = SDKROOT; };
 		DF195E052EA8654E002DBFE5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DF195E072EA86557002DBFE5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -73,6 +72,7 @@
 		DF195E122EA86635002DBFE5 /* TestProject-Bridging-Header.h  */ = {isa = PBXFileReference; lastKnownFileType = text; path = "TestProject-Bridging-Header.h "; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F253C91623E843E3BC888E5E /* AwanZaman Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AwanZaman Regular.ttf"; path = "../assets/fonts/AwanZaman Regular.ttf"; sourceTree = "<group>"; };
+		FAFCF041DB0D586E5DFA3D89 /* Pods-TestProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestProject.debug.xcconfig"; path = "Target Support Files/Pods-TestProject/Pods-TestProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +87,7 @@
 				DF195E082EA86557002DBFE5 /* AudioToolbox.framework in Frameworks */,
 				DF195E062EA8654E002DBFE5 /* AVFoundation.framework in Frameworks */,
 				DF195E042EA86544002DBFE5 /* Speech.framework in Frameworks */,
-				AEAE3672DDCD118ED91C55FA /* Pods_TestProject.framework in Frameworks */,
+				8EFA46D37F7EBE025E857448 /* Pods_TestProject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,7 +119,7 @@
 				DF195E052EA8654E002DBFE5 /* AVFoundation.framework */,
 				DF195E032EA86544002DBFE5 /* Speech.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				19467C832347B78461F80388 /* Pods_TestProject.framework */,
+				7BAF5ABECC7A8D9613612485 /* Pods_TestProject.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -180,8 +180,8 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8790AF28B19DDF4AE0DBDB22 /* Pods-TestProject.debug.xcconfig */,
-				D4C2643E1F17C43DE9C6E841 /* Pods-TestProject.release.xcconfig */,
+				FAFCF041DB0D586E5DFA3D89 /* Pods-TestProject.debug.xcconfig */,
+				714F8ED1346FC1587699C56C /* Pods-TestProject.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -193,13 +193,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TestProject" */;
 			buildPhases = (
-				D182734139A08883226FDC5F /* [CP] Check Pods Manifest.lock */,
+				8CD689F999A79EDA25A7272D /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				2FF5D9A9150E8FD51B87A0F2 /* [CP] Embed Pods Frameworks */,
-				3535ADFCC5E9C73FAD8810FD /* [CP] Copy Pods Resources */,
+				54B64ADA93D63BA66F08F647 /* [CP] Embed Pods Frameworks */,
+				C5583F105541A64441905B9C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -288,7 +288,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		2FF5D9A9150E8FD51B87A0F2 /* [CP] Embed Pods Frameworks */ = {
+		54B64ADA93D63BA66F08F647 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -303,22 +303,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestProject/Pods-TestProject-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3535ADFCC5E9C73FAD8810FD /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestProject/Pods-TestProject-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D182734139A08883226FDC5F /* [CP] Check Pods Manifest.lock */ = {
+		8CD689F999A79EDA25A7272D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -340,6 +325,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C5583F105541A64441905B9C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestProject/Pods-TestProject-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -356,7 +356,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8790AF28B19DDF4AE0DBDB22 /* Pods-TestProject.debug.xcconfig */;
+			baseConfigurationReference = FAFCF041DB0D586E5DFA3D89 /* Pods-TestProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -371,8 +371,10 @@
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/**",
-					"$(inherited)",
+					"$(inherited)/**",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/ReactCommon/**",
+					"$(SRCROOT)/../node_modules/**",
 				);
 				INFOPLIST_FILE = TestProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
@@ -399,7 +401,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D4C2643E1F17C43DE9C6E841 /* Pods-TestProject.release.xcconfig */;
+			baseConfigurationReference = 714F8ED1346FC1587699C56C /* Pods-TestProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -413,8 +415,10 @@
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/**",
-					"$(inherited)",
+					"$(inherited)/**",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/ReactCommon/**",
+					"$(SRCROOT)/../node_modules/**",
 				);
 				INFOPLIST_FILE = TestProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
@@ -442,6 +446,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -473,7 +478,7 @@
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -532,6 +537,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -563,7 +569,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;

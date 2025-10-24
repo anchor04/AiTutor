@@ -1,11 +1,9 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 
 platform :ios, '16.0'
-install! 'cocoapods', :disable_input_output_paths => true
 
 target 'TestProject' do
   use_frameworks! :linkage => :static
-
   config = use_native_modules!
 
   use_react_native!(
@@ -13,16 +11,14 @@ target 'TestProject' do
     :hermes_enabled => true
   )
 
+  target 'TestProjectTests' do
+    inherit! :complete
+  end
 end
 
-# --- 👇 Add this BELOW the 'end' of target block ---
-$clang_cxx_flags = '-std=gnu++17 -stdlib=libc++'
-
 post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'gnu++20'
-      config.build_settings['CLANG_CXX_LIBRARY'] = 'libc++'
-    end
-  end
+  react_native_post_install(
+    installer,
+    :mac_catalyst_enabled => false
+  )
 end
